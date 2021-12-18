@@ -1,6 +1,6 @@
 # Auction Site (server side)
 
-This is a backend for a Auction site built in Express.js, where people can create an auction for their items, and also they can bid on items they like, and the highest bidder wins the auction.
+This is a backend for an Auction site built in Express.js, where people can create an auction for their items, and also they can bid on items they like, and the highest bidder wins the auction.
 
 ##  Entity Relationship Diagram
 
