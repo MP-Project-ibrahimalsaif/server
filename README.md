@@ -13,7 +13,7 @@ Deployment: https://Deployment
 
 Slides: https://Slides
 
-## ⚫ User Stories
+## ⚪ User Stories
 
 - A guest can browse the site a see all the available auctions without the need for sign-in.
 - A guest must have an account and log-in if they want to use the site features.
@@ -28,11 +28,11 @@ Slides: https://Slides
 - A user with role `admin` has a dashboard with all of the site information and statistics.
 - A user can report a scammer to the admin so he can't bid or create an auction again.
 
-## ⚫ Entity Relationship Diagram
+## ⚪ Entity Relationship Diagram
 
 ![masterpice backend ERD](https://user-images.githubusercontent.com/92247874/146672131-272a861a-9b26-4792-ae22-74334568d8f5.jpg)
 
-## ⚫UML Diagram
+## ⚪UML Diagram
 
 ![masterpice backend UML](https://user-images.githubusercontent.com/92247874/146673943-370964f2-14fc-4004-9d87-0fc0a438c8d6.jpg)
 
@@ -75,7 +75,7 @@ SALT=`Your SALT here`
 SECRET_KEY=`Your SECRET KEY here`
 ```
 
-## ⚫ Running the server
+## ⚪ Running the server
 
 To run the server, execute:
 
@@ -91,7 +91,7 @@ npm run start
 
 To run the server on production mode.
 
-## ⚫ Models
+## ⚪ Models
 
 ### ▼ Users
 
@@ -162,7 +162,7 @@ To run the server on production mode.
 | status     | Schema <Status> | required | pending       |
 | timestamp  | Date            | N/A      | Date now      |
 
-## ⚫ API Reference
+## ⚪ API Reference
 
 ## ■ Getting Started
 
