@@ -2,15 +2,16 @@
 
 This is a backend for an Auction site built in Express.js, where people can create an auction for their items, and also they can bid on items they like, and the highest bidder wins the auction.
 
+Trello: https://trello.com/b/GMe6Tyz1/mp-project-ibrahimalsaif
+
 ##  Entity Relationship Diagram
 
-![masterpice backend ERD](https://user-images.githubusercontent.com/92247874/146649061-8c92944d-8b03-4027-a3b5-bfc1cefcc87e.jpg)
+![masterpice backend ERD](https://user-images.githubusercontent.com/92247874/146672131-272a861a-9b26-4792-ae22-74334568d8f5.jpg)
 
 
 ## UML Diagram
 
-![masterpice backend UML](https://user-images.githubusercontent.com/92247874/146649049-213f56dc-f00a-40b1-9332-524221f53b26.jpg)
-
+![masterpice backend UML](https://user-images.githubusercontent.com/92247874/146671663-662c7bba-32f8-4b23-a013-74810c9e291d.jpg)
 
 ## Getting Started
 
