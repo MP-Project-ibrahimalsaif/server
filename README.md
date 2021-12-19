@@ -7,11 +7,13 @@ This is a backend for an Auction site built in Express.js, where people can crea
 
 </div>
 
-Trello: https://trello.com/b/GMe6Tyz1/mp-project-ibrahimalsaif
+➤ Client side: https://github.com/MP-Project-ibrahimalsaif/client
 
-Deployment: https://Deployment
+➤ Trello: https://trello.com/b/GMe6Tyz1/mp-project-ibrahimalsaif
 
-Slides: https://Slides
+➤ Deployment: https://Deployment
+
+➤ Slides: https://Slides
 
 ## ⚪ User Stories
 
