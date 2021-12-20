@@ -23,6 +23,10 @@ app.use(rolesRouter);
 const statusRouter = require("./routers/routes/status");
 app.use(statusRouter);
 
+// Users Router
+const usersRouter = require("./routers/routes/users");
+app.use(usersRouter);
+
 // Get PORT variable from .env
 const PORT = process.env.PORT || 5000;
 
