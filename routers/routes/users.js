@@ -4,7 +4,14 @@ const popupTools = require("popup-tools");
 
 require("./../../config/passport");
 
-const { signup, login, getProfile } = require("../controllers/users");
+const {
+  signup,
+  login,
+  getProfile,
+  editAccount,
+} = require("../controllers/users");
+const authentication = require("../middlewares/authentication");
+const authorization = require("../middlewares/authorization");
 
 const usersRouter = express.Router();
 
@@ -22,5 +29,6 @@ usersRouter.get(
   }
 );
 usersRouter.get("/users/:id", getProfile);
+usersRouter.put("/users", authentication, editAccount);
 
 module.exports = usersRouter;

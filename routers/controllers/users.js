@@ -146,8 +146,43 @@ const getProfile = (req, res) => {
     });
 };
 
+const editAccount = async (req, res) => {
+  const { name, password, avatar } = req.body;
+  let hashedPassword;
+
+  if (password) {
+    hashedPassword = await bcrypt.hash(password, SALT);
+  }
+
+  const user = await usersModel.findOne({ _id: req.token.id });
+
+  usersModel
+    .findByIdAndUpdate(
+      req.token.id,
+      {
+        name: name ? name : user.name,
+        password: password ? hashedPassword : user.password,
+        avatar: avatar ? avatar : user.avatar,
+      },
+      { new: true }
+    )
+    .then((result) => {
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res
+          .status(404)
+          .json({ message: `There is no user with this ID: ${id}` });
+      }
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
 module.exports = {
   signup,
   login,
   getProfile,
+  editAccount,
 };
