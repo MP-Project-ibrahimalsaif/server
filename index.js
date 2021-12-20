@@ -19,6 +19,10 @@ app.use(morgan("dev"));
 const rolesRouter = require("./routers/routes/roles");
 app.use(rolesRouter);
 
+// Status Router
+const statusRouter = require("./routers/routes/status");
+app.use(statusRouter);
+
 // Get PORT variable from .env
 const PORT = process.env.PORT || 5000;
 
