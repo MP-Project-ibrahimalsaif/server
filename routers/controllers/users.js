@@ -126,7 +126,28 @@ const login = (req, res) => {
     });
 };
 
+const getProfile = (req, res) => {
+  const { id } = req.params;
+
+  usersModel
+    .findOne({ _id: id })
+    .then((result) => {
+      if (result)
+        res
+          .status(200)
+          .json({ id: result._id, name: result.name, avatar: result.avatar });
+      else
+        res
+          .status(404)
+          .json({ message: `there is no user with the ID: ${id}` });
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
 module.exports = {
   signup,
   login,
+  getProfile,
 };
