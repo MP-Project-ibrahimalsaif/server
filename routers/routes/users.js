@@ -4,7 +4,7 @@ const popupTools = require("popup-tools");
 
 require("./../../config/passport");
 
-const { signup, login } = require("../controllers/users");
+const { signup, login, getProfile } = require("../controllers/users");
 
 const usersRouter = express.Router();
 
@@ -21,5 +21,6 @@ usersRouter.get(
     res.end(popupTools.popupResponse(req.user));
   }
 );
+usersRouter.get("/users/:id", getProfile);
 
 module.exports = usersRouter;
