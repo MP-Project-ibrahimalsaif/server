@@ -74,47 +74,48 @@ const login = (req, res) => {
     .populate("role")
     .then(async (result) => {
       if (result) {
-        if (result.blocked === false) {
-          if (result.active === true) {
-            if (result.email == lowerCaseEmail) {
-              const matchedPassword = await bcrypt.compare(
-                password,
-                result.password
-              );
+        if (result.email == lowerCaseEmail) {
+          if (result.password) {
+            const matchedPassword = await bcrypt.compare(
+              password,
+              result.password
+            );
 
-              if (matchedPassword) {
-                const payload = {
-                  id: result._id,
-                  email: result.email,
-                  name: result.name,
-                  role: result.role.role,
-                };
+            if (matchedPassword) {
+              const payload = {
+                id: result._id,
+                email: result.email,
+                name: result.name,
+                role: result.role.role,
+              };
 
-                const options = {
-                  expiresIn: "10h",
-                };
+              const options = {
+                expiresIn: "10h",
+              };
 
-                const token = jwt.sign(payload, SECRET, options);
+              const token = jwt.sign(payload, SECRET, options);
 
-                res.status(200).json({ result, token });
-              } else {
-                res
-                  .status(400)
-                  .json({ message: "Invalid email or password!!" });
+              if (result.blocked) {
+                res.status(404).json({
+                  message: "This user is not allowed to use the site!!",
+                });
               }
+              if (!result.active) {
+                res.status(404).json({
+                  message:
+                    "Your account is not activated please check your email!!",
+                });
+              }
+
+              res.status(200).json({ result, token });
             } else {
               res.status(400).json({ message: "Invalid email or password!!" });
             }
           } else {
-            res.status(404).json({
-              message:
-                "Your account is not activated please check your email!!",
-            });
+            res.status(400).json({ message: "Invalid email or password!!" });
           }
         } else {
-          res
-            .status(404)
-            .json({ message: "This user is not allowed to use the site!!" });
+          res.status(400).json({ message: "Invalid email or password!!" });
         }
       } else {
         res.status(404).json({ message: "Invalid email or password!!" });
