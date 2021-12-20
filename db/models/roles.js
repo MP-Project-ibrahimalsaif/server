@@ -10,6 +10,10 @@ const rolesSchema = new mongoose.Schema({
     type: Array,
     required: true,
   },
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const rolesModel = mongoose.model("roles", rolesSchema);
