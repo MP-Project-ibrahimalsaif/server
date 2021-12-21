@@ -16,7 +16,7 @@ const getReports = (req, res) => {
     });
 };
 
-const createReport = async (req, res) => {
+const createReport = (req, res) => {
   const { id } = req.params;
   const { reason } = req.body;
 
@@ -37,7 +37,7 @@ const createReport = async (req, res) => {
     });
 };
 
-const changeReportStatus = async (req, res) => {
+const changeReportStatus = (req, res) => {
   const { id } = req.params;
   const { status_id } = req.body;
 

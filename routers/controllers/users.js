@@ -180,7 +180,7 @@ const editAccount = async (req, res) => {
     });
 };
 
-const addToWatchList = async (req, res) => {
+const addToWatchList = (req, res) => {
   const { id } = req.params;
 
   usersModel
@@ -203,7 +203,7 @@ const addToWatchList = async (req, res) => {
     });
 };
 
-const deleteFromWatchList = async (req, res) => {
+const deleteFromWatchList = (req, res) => {
   const { id } = req.params;
 
   usersModel
@@ -238,7 +238,7 @@ const getUsers = (req, res) => {
     });
 };
 
-const changeRole = async (req, res) => {
+const changeRole = (req, res) => {
   const { id } = req.params;
 
   usersModel
@@ -263,7 +263,7 @@ const changeRole = async (req, res) => {
     });
 };
 
-const blockUser = async (req, res) => {
+const blockUser = (req, res) => {
   const { id } = req.params;
 
   usersModel
@@ -271,6 +271,31 @@ const blockUser = async (req, res) => {
       id,
       {
         blocked: true,
+      },
+      { new: true }
+    )
+    .then((result) => {
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res
+          .status(404)
+          .json({ message: `There is no user with this ID: ${id}` });
+      }
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
+const unblockUser = (req, res) => {
+  const { id } = req.params;
+
+  usersModel
+    .findByIdAndUpdate(
+      id,
+      {
+        blocked: false,
       },
       { new: true }
     )
@@ -298,4 +323,5 @@ module.exports = {
   getUsers,
   changeRole,
   blockUser,
+  unblockUser,
 };

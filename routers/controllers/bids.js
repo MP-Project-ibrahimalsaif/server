@@ -34,7 +34,7 @@ const getUserBids = (req, res) => {
     });
 };
 
-const addBid = async (req, res) => {
+const addBid = (req, res) => {
   const { id } = req.params;
   const { bid } = req.body;
 
