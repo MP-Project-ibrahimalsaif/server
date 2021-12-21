@@ -49,6 +49,21 @@ const getHomeAuctions = (req, res) => {
     });
 };
 
+const userAuctions = (req, res) => {
+  const { id } = req.params;
+
+  auctionsModel
+    .find({ createdBy: id, status: process.env.APPROVED_STATUS })
+    .sort({ endDateTime: 1 })
+    .then((result) => {
+      if (result.length > 0) res.status(200).json(result);
+      else res.status(404).json({ message: "this user has no auctions yet!!" });
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
 const createAuction = (req, res) => {
   const {
     title,
@@ -84,4 +99,10 @@ const createAuction = (req, res) => {
     });
 };
 
-module.exports = { getAuctions, getAuction, getHomeAuctions, createAuction };
+module.exports = {
+  getAuctions,
+  getAuction,
+  getHomeAuctions,
+  userAuctions,
+  createAuction,
+};
