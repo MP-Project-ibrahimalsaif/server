@@ -147,7 +147,7 @@ const editAuction = async (req, res) => {
   }
 };
 
-const changeAuctionStatus = async (req, res) => {
+const changeAuctionStatus = (req, res) => {
   const { id } = req.params;
   const { status_id } = req.body;
 
