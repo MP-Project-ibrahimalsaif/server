@@ -37,7 +37,28 @@ const createReport = async (req, res) => {
     });
 };
 
+const changeReportStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status_id } = req.body;
+
+  reportsModel
+    .findOneAndUpdate({ _id: id }, { status: status_id }, { new: true })
+    .then((result) => {
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res
+          .status(404)
+          .json({ message: `There is no report with this ID: ${id}` });
+      }
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
 module.exports = {
   getReports,
   createReport,
+  changeReportStatus,
 };
