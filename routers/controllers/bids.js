@@ -8,11 +8,26 @@ const getAuctionBids = (req, res) => {
     .then((result) => {
       if (result) res.status(200).json(result);
       else
-        res
-          .status(404)
-          .json({
-            message: `there is no bids for the auction with the ID: ${id}`,
-          });
+        res.status(404).json({
+          message: `there is no bids for the auction with the ID: ${id}`,
+        });
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
+const getUserBids = (req, res) => {
+  const { id } = req.params;
+
+  bidsModel
+    .find({ createdBy: id })
+    .then((result) => {
+      if (result.length > 0) res.status(200).json(result);
+      else
+        res.status(404).json({
+          message: `there is no bids for the user with the ID: ${id}`,
+        });
     })
     .catch((err) => {
       res.status(400).json(err);
@@ -41,5 +56,6 @@ const addBid = async (req, res) => {
 
 module.exports = {
   getAuctionBids,
+  getUserBids,
   addBid,
 };
