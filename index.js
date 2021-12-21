@@ -43,6 +43,10 @@ app.use(usersRouter);
 const auctionsRouter = require("./routers/routes/auctions");
 app.use(auctionsRouter);
 
+// Bids Router
+const bidsRouter = require("./routers/routes/bids");
+app.use(bidsRouter);
+
 // Get PORT variable from .env
 const PORT = process.env.PORT || 5000;
 

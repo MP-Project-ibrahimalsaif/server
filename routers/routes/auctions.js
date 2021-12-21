@@ -12,19 +12,19 @@ const {
 const authentication = require("../middlewares/authentication");
 const authorization = require("../middlewares/authorization");
 
-const statusRouter = express.Router();
+const auctionsRouter = express.Router();
 
-statusRouter.get("/auctions", getAuctions);
-statusRouter.get("/auctions/:id", getAuction);
-statusRouter.get("/homeAuctions", getHomeAuctions);
-statusRouter.get("/userAuctions/:id", authentication, userAuctions);
-statusRouter.post("/auctions", authentication, createAuction);
-statusRouter.put("/auctions/:id", authentication, editAuction);
-statusRouter.put(
+auctionsRouter.get("/auctions", getAuctions);
+auctionsRouter.get("/auctions/:id", getAuction);
+auctionsRouter.get("/homeAuctions", getHomeAuctions);
+auctionsRouter.get("/userAuctions/:id", authentication, userAuctions);
+auctionsRouter.post("/auctions", authentication, createAuction);
+auctionsRouter.put("/auctions/:id", authentication, editAuction);
+auctionsRouter.put(
   "/changeAuctionStatus/:id",
   authentication,
   authorization,
   changeAuctionStatus
 );
 
-module.exports = statusRouter;
+module.exports = auctionsRouter;
