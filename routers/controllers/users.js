@@ -205,10 +205,36 @@ const changeRole = async (req, res) => {
     });
 };
 
+const blockUser = async (req, res) => {
+  const { id } = req.params;
+
+  usersModel
+    .findByIdAndUpdate(
+      id,
+      {
+        blocked: true,
+      },
+      { new: true }
+    )
+    .then((result) => {
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res
+          .status(404)
+          .json({ message: `There is no user with this ID: ${id}` });
+      }
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
 module.exports = {
   signup,
   login,
   getProfile,
   editAccount,
   changeRole,
+  blockUser,
 };
