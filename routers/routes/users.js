@@ -10,6 +10,7 @@ const {
   getProfile,
   editAccount,
   changeRole,
+  blockUser,
 } = require("../controllers/users");
 const authentication = require("../middlewares/authentication");
 const authorization = require("../middlewares/authorization");
@@ -32,5 +33,6 @@ usersRouter.get(
 usersRouter.get("/users/:id", getProfile);
 usersRouter.put("/users", authentication, editAccount);
 usersRouter.put("/changeRole/:id", authentication, authorization, changeRole);
+usersRouter.put("/blockUser/:id", authentication, authorization, blockUser);
 
 module.exports = usersRouter;
