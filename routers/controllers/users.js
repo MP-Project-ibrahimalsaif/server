@@ -1,4 +1,5 @@
 const usersModel = require("./../../db/models/users");
+const auctionsModel = require("./../../db/models/auctions");
 const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -131,15 +132,20 @@ const getProfile = (req, res) => {
 
   usersModel
     .findOne({ _id: id })
-    .then((result) => {
-      if (result)
-        res
-          .status(200)
-          .json({ id: result._id, name: result.name, avatar: result.avatar });
-      else
+    .then(async (result) => {
+      if (result) {
+        const profileAuctions = await auctionsModel.find({ createdBy: id });
+        res.status(200).json({
+          id: result._id,
+          name: result.name,
+          avatar: result.avatar,
+          auctions: profileAuctions,
+        });
+      } else {
         res
           .status(404)
           .json({ message: `there is no user with the ID: ${id}` });
+      }
     })
     .catch((err) => {
       res.status(400).json(err);
