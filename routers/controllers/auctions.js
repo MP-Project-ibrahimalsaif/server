@@ -1,4 +1,20 @@
 const auctionsModel = require("./../../db/models/auctions");
+const dotenv = require("dotenv");
+
+// Config .env file
+dotenv.config();
+
+const getAuctions = (req, res) => {
+    auctionsModel
+      .find({})
+      .then((result) => {
+        if (result.length > 0) res.status(200).json(result);
+        else res.status(404).json({ message: "there is no auctions yet!!" });
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  };
 
 const createAuction = (req, res) => {
   const {
@@ -10,7 +26,6 @@ const createAuction = (req, res) => {
     categories,
     endDateTime,
     condition,
-    status,
   } = req.body;
 
   const newAuction = new auctionsModel({
@@ -22,7 +37,7 @@ const createAuction = (req, res) => {
     categories,
     endDateTime,
     condition,
-    status,
+    status: process.env.APPROVED_STATUS,
     createdBy: req.token.id,
   });
 
@@ -36,4 +51,4 @@ const createAuction = (req, res) => {
     });
 };
 
-module.exports = { createAuction };
+module.exports = { getAuctions, createAuction };
