@@ -226,6 +226,18 @@ const deleteFromWatchList = async (req, res) => {
     });
 };
 
+const getUsers = (req, res) => {
+  usersModel
+    .find({})
+    .then((result) => {
+      if (result.length > 0) res.status(200).json(result);
+      else res.status(404).json({ message: "there is no users yet!!" });
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
 const changeRole = async (req, res) => {
   const { id } = req.params;
 
@@ -283,6 +295,7 @@ module.exports = {
   editAccount,
   addToWatchList,
   deleteFromWatchList,
+  getUsers,
   changeRole,
   blockUser,
 };
