@@ -147,6 +147,35 @@ const editAuction = async (req, res) => {
   }
 };
 
+const changeAuctionStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status_id } = req.body;
+
+  auctionsModel
+    .findOneAndUpdate(
+      {
+        _id: id,
+        sold: false,
+      },
+      {
+        status: status_id,
+      },
+      { new: true }
+    )
+    .then((result) => {
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res
+          .status(404)
+          .json({ message: `There is no auction with this ID: ${id}` });
+      }
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
 module.exports = {
   getAuctions,
   getAuction,
@@ -154,4 +183,5 @@ module.exports = {
   userAuctions,
   createAuction,
   editAuction,
+  changeAuctionStatus,
 };
