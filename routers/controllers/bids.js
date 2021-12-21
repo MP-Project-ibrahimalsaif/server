@@ -6,7 +6,7 @@ const getAuctionBids = (req, res) => {
   bidsModel
     .find({ auction: id })
     .then((result) => {
-      if (result) res.status(200).json(result);
+      if (result.length > 0) res.status(200).json(result);
       else
         res.status(404).json({
           message: `there is no bids for the auction with the ID: ${id}`,
