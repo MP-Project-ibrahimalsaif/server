@@ -180,6 +180,52 @@ const editAccount = async (req, res) => {
     });
 };
 
+const addToWatchList = async (req, res) => {
+  const { id } = req.params;
+
+  usersModel
+    .findByIdAndUpdate(
+      req.token.id,
+      { $push: { watchlist: id } },
+      { new: true }
+    )
+    .then((result) => {
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res
+          .status(404)
+          .json({ message: `There is no user with this ID: ${id}` });
+      }
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
+const deleteFromWatchList = async (req, res) => {
+  const { id } = req.params;
+
+  usersModel
+    .findByIdAndUpdate(
+      req.token.id,
+      { $pull: { watchlist: id } },
+      { new: true }
+    )
+    .then((result) => {
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res
+          .status(404)
+          .json({ message: `There is no user with this ID: ${id}` });
+      }
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
 const changeRole = async (req, res) => {
   const { id } = req.params;
 
@@ -235,6 +281,8 @@ module.exports = {
   login,
   getProfile,
   editAccount,
+  addToWatchList,
+  deleteFromWatchList,
   changeRole,
   blockUser,
 };

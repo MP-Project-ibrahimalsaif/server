@@ -9,6 +9,8 @@ const {
   login,
   getProfile,
   editAccount,
+  addToWatchList,
+  deleteFromWatchList,
   changeRole,
   blockUser,
 } = require("../controllers/users");
@@ -32,6 +34,8 @@ usersRouter.get(
 );
 usersRouter.get("/users/:id", getProfile);
 usersRouter.put("/users", authentication, editAccount);
+usersRouter.post("/addAuctionToWatchlist/:id", authentication, addToWatchList);
+usersRouter.put("/deleteAuctionFromWatchlist/:id", authentication, deleteFromWatchList);
 usersRouter.put("/changeRole/:id", authentication, authorization, changeRole);
 usersRouter.put("/blockUser/:id", authentication, authorization, blockUser);
 
