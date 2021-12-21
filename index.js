@@ -39,6 +39,10 @@ app.use(statusRouter);
 const usersRouter = require("./routers/routes/users");
 app.use(usersRouter);
 
+// Auctions Router
+const auctionsRouter = require("./routers/routes/auctions");
+app.use(auctionsRouter);
+
 // Get PORT variable from .env
 const PORT = process.env.PORT || 5000;
 
