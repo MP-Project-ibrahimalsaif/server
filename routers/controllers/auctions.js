@@ -99,10 +99,59 @@ const createAuction = (req, res) => {
     });
 };
 
+const editAuction = async (req, res) => {
+  const { id } = req.params;
+  const { title, description, images, categories, condition } = req.body;
+
+  const auction = await auctionsModel.findOne({
+    _id: id,
+    createdBy: req.token.id,
+    status: process.env.APPROVED_STATUS,
+    sold: false,
+  });
+
+  if (auction) {
+    auctionsModel
+      .findOneAndUpdate(
+        {
+          _id: id,
+          createdBy: req.token.id,
+          status: process.env.APPROVED_STATUS,
+          sold: false,
+        },
+        {
+          title: title ? title : user.title,
+          description: description ? description : auction.description,
+          images: images ? images : auction.images,
+          categories: categories ? categories : auction.categories,
+          condition: condition ? condition : auction.condition,
+        },
+        { new: true }
+      )
+      .then((result) => {
+        if (result) {
+          res.status(200).json(result);
+        } else {
+          res
+            .status(404)
+            .json({ message: `There is no auction with this ID: ${id}` });
+        }
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  } else {
+    res
+      .status(404)
+      .json({ message: `There is no auction with this ID: ${id}` });
+  }
+};
+
 module.exports = {
   getAuctions,
   getAuction,
   getHomeAuctions,
   userAuctions,
   createAuction,
+  editAuction,
 };

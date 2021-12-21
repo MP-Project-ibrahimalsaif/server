@@ -172,7 +172,7 @@ const editAccount = async (req, res) => {
       } else {
         res
           .status(404)
-          .json({ message: `There is no user with this ID: ${id}` });
+          .json({ message: `There is no user with this ID: ${req.token.id}` });
       }
     })
     .catch((err) => {
