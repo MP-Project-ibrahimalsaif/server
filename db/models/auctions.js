@@ -34,6 +34,10 @@ const auctionsSchema = new mongoose.Schema({
       type: String,
     },
   ],
+  bids: {
+    type: Number,
+    default: 0,
+  },
   endDateTime: {
     type: Date,
     required: true,
