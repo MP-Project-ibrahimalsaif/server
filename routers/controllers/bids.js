@@ -1,4 +1,5 @@
 const bidsModel = require("./../../db/models/bids");
+const auctionsModel = require("./../../db/models/auctions");
 
 const getAuctionBids = (req, res) => {
   const { id } = req.params;
@@ -46,7 +47,8 @@ const addBid = (req, res) => {
 
   newBid
     .save()
-    .then((result) => {
+    .then(async (result) => {
+      await auctionsModel.findByIdAndUpdate(id, { $inc: { bids: 1 } });
       res.status(201).json(result);
     })
     .catch((err) => {
