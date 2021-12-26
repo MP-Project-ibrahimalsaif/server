@@ -87,7 +87,16 @@ const createAuction = (req, res) => {
 
 const editAuction = async (req, res) => {
   const { id } = req.params;
-  const { title, description, images, categories, condition } = req.body;
+  const {
+    title,
+    description,
+    images,
+    initialPrice,
+    minIncrement,
+    categories,
+    endDateTime,
+    condition,
+  } = req.body;
 
   const auction = await auctionsModel.findOne({
     _id: id,
@@ -106,10 +115,13 @@ const editAuction = async (req, res) => {
           sold: false,
         },
         {
-          title: title ? title : user.title,
+          title: title ? title : auction.title,
           description: description ? description : auction.description,
           images: images ? images : auction.images,
+          initialPrice: initialPrice ? initialPrice : auction.initialPrice,
+          minIncrement: minIncrement ? minIncrement : auction.minIncrement,
           categories: categories ? categories : auction.categories,
+          endDateTime: endDateTime ? endDateTime : auction.endDateTime,
           condition: condition ? condition : auction.condition,
         },
         { new: true }
