@@ -7,6 +7,7 @@ require("./../../config/passport");
 const {
   signup,
   login,
+  logout,
   getProfile,
   editAccount,
   addToWatchList,
@@ -23,6 +24,7 @@ const usersRouter = express.Router();
 
 usersRouter.post("/signup", signup);
 usersRouter.post("/login", login);
+usersRouter.get("/logout", logout);
 usersRouter.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["email", "profile"] })
