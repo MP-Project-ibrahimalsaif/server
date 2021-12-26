@@ -127,6 +127,15 @@ const login = (req, res) => {
     });
 };
 
+const logout = async (req, res) => {
+  try {
+    req.logout();
+    res.status(200).json("user logged out");
+  } catch (error) {
+    res.status(400).json("somthing went wrong");
+  }
+};
+
 const getProfile = (req, res) => {
   const { id } = req.params;
 
@@ -322,6 +331,7 @@ const unblockUser = (req, res) => {
 module.exports = {
   signup,
   login,
+  logout,
   getProfile,
   editAccount,
   addToWatchList,
