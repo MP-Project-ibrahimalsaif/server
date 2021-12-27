@@ -48,7 +48,10 @@ const addBid = (req, res) => {
   newBid
     .save()
     .then(async (result) => {
-      await auctionsModel.findByIdAndUpdate(id, { $inc: { bids: 1 } });
+      await auctionsModel.findByIdAndUpdate(id, {
+        $inc: { bids: 1 },
+        currentPrice: bid,
+      });
       res.status(201).json(result);
     })
     .catch((err) => {
