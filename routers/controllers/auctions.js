@@ -1,4 +1,5 @@
 const auctionsModel = require("./../../db/models/auctions");
+const bidsModel = require("./../../db/models/bids");
 const dotenv = require("dotenv");
 
 // Config .env file
@@ -23,9 +24,11 @@ const getAuction = (req, res) => {
   auctionsModel
     .findOne({ _id: id, status: process.env.APPROVED_STATUS, sold: false })
     .populate("createdBy")
-    .then((result) => {
-      if (result) res.status(200).json(result);
-      else
+    .then(async (result) => {
+      if (result) {
+        const bids = await bidsModel.find({ auction: id }).populate("createdBy");
+        res.status(200).json({ auction: result, bids });
+      } else
         res
           .status(404)
           .json({ message: `there is no auction with the ID: ${id}` });
