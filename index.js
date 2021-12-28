@@ -1,4 +1,5 @@
 const express = require("express");
+const socket = require("socket.io");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const cors = require("cors");
@@ -55,6 +56,26 @@ app.use(reportsRouter);
 const PORT = process.env.PORT || 5000;
 
 // Start the app
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`SERVER ON PORT ${PORT}`);
+});
+
+const io = socket(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  },
+});
+
+io.on("connection", (socket) => {
+  socket.on("auction_room", (data) => {
+    socket.join(data.room);
+    console.log(`user has entered the room number ${data.room}`);
+  });
+
+  socket.on("make_bid", (data) => {
+    socket.to(data.room).emit("recieve_bid", {
+      bid: data.bid,
+    });
+  });
 });
