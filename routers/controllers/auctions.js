@@ -7,7 +7,7 @@ dotenv.config();
 
 const getAuctions = (req, res) => {
   auctionsModel
-    .find({ status: process.env.APPROVED_STATUS, sold: false })
+    .find({ status: process.env.APPROVED_STATUS })
     .populate("createdBy")
     .then((result) => {
       if (result.length > 0) res.status(200).json(result);
@@ -22,11 +22,13 @@ const getAuction = (req, res) => {
   const { id } = req.params;
 
   auctionsModel
-    .findOne({ _id: id, status: process.env.APPROVED_STATUS, sold: false })
+    .findOne({ _id: id, status: process.env.APPROVED_STATUS })
     .populate("createdBy")
     .then(async (result) => {
       if (result) {
-        const bids = await bidsModel.find({ auction: id }).populate("createdBy");
+        const bids = await bidsModel
+          .find({ auction: id })
+          .populate("createdBy");
         res.status(200).json({ auction: result, bids });
       } else
         res
@@ -43,7 +45,6 @@ const userAuctions = (req, res) => {
 
   auctionsModel
     .find({ createdBy: id, status: process.env.APPROVED_STATUS })
-    .sort({ endDateTime: 1 })
     .then((result) => {
       if (result.length > 0) res.status(200).json(result);
       else res.status(404).json({ message: "this user has no auctions yet!!" });
