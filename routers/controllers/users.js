@@ -143,7 +143,9 @@ const getProfile = (req, res) => {
     .findOne({ _id: id })
     .then(async (result) => {
       if (result) {
-        const profileAuctions = await auctionsModel.find({ createdBy: id });
+        const profileAuctions = await auctionsModel
+          .find({ createdBy: id, status: process.env.APPROVED_STATUS })
+          .populate("createdBy");
         res.status(200).json({
           id: result._id,
           name: result.name,
