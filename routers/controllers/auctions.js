@@ -1,4 +1,5 @@
 const auctionsModel = require("./../../db/models/auctions");
+const invoicesModel = require("./../../db/models/invoices");
 const bidsModel = require("./../../db/models/bids");
 const schedule = require("node-schedule");
 const dotenv = require("dotenv");
@@ -85,9 +86,18 @@ const createAuction = (req, res) => {
     .save()
     .then((result) => {
       schedule.scheduleJob(endDateTime, async () => {
-        await auctionsModel.findByIdAndUpdate(result._id, {
+        const auction = await auctionsModel.findOne({_id: result._id});
+
+        await auctionsModel.findByIdAndUpdate(auction._id, {
           sold: true,
         });
+
+        const newInvoices = new invoicesModel({
+          auction: auction._id,
+          buyer: auction.buyer,
+          status: process.env.PENDING_STATUS,
+        });
+        newInvoices.save();
       });
       res.status(201).json(result);
     })
