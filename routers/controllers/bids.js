@@ -51,6 +51,7 @@ const addBid = (req, res) => {
       await auctionsModel.findByIdAndUpdate(id, {
         $inc: { bids: 1 },
         currentPrice: bid,
+        buyer: req.token.id,
       });
       res.status(201).json(result);
     })

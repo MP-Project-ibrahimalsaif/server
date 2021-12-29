@@ -1,5 +1,6 @@
 const auctionsModel = require("./../../db/models/auctions");
 const bidsModel = require("./../../db/models/bids");
+const schedule = require("node-schedule");
 const dotenv = require("dotenv");
 
 // Config .env file
@@ -23,7 +24,7 @@ const getAuction = (req, res) => {
 
   auctionsModel
     .findOne({ _id: id, status: process.env.APPROVED_STATUS })
-    .populate("createdBy")
+    .populate("createdBy buyer")
     .then(async (result) => {
       if (result) {
         const bids = await bidsModel
@@ -71,6 +72,7 @@ const createAuction = (req, res) => {
     description,
     images,
     initialPrice,
+    currentPrice: initialPrice,
     minIncrement,
     categories,
     endDateTime,
@@ -82,6 +84,11 @@ const createAuction = (req, res) => {
   newAuction
     .save()
     .then((result) => {
+      schedule.scheduleJob(endDateTime, async () => {
+        await auctionsModel.findByIdAndUpdate(result._id, {
+          sold: true,
+        });
+      });
       res.status(201).json(result);
     })
     .catch((err) => {
