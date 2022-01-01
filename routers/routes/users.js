@@ -9,6 +9,7 @@ const {
   login,
   logout,
   getProfile,
+  userWatchList,
   editAccount,
   addToWatchList,
   deleteFromWatchList,
@@ -37,6 +38,7 @@ usersRouter.get(
   }
 );
 usersRouter.get("/users/:id", getProfile);
+usersRouter.get("/userWatchList/:id", authentication, userWatchList);
 usersRouter.put("/users", authentication, editAccount);
 usersRouter.post("/addAuctionToWatchlist/:id", authentication, addToWatchList);
 usersRouter.put(
