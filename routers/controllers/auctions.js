@@ -46,7 +46,8 @@ const userAuctions = (req, res) => {
   const { id } = req.params;
 
   auctionsModel
-    .find({ createdBy: id, status: process.env.APPROVED_STATUS })
+    .find({ createdBy: id })
+    .populate("status")
     .then((result) => {
       if (result.length > 0) res.status(200).json(result);
       else res.status(404).json({ message: "this user has no auctions yet!!" });
@@ -86,7 +87,7 @@ const createAuction = (req, res) => {
     .save()
     .then((result) => {
       schedule.scheduleJob(endDateTime, async () => {
-        const auction = await auctionsModel.findOne({_id: result._id});
+        const auction = await auctionsModel.findOne({ _id: result._id });
 
         await auctionsModel.findByIdAndUpdate(auction._id, {
           sold: true,

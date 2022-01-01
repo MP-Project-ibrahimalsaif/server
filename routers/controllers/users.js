@@ -163,6 +163,26 @@ const getProfile = (req, res) => {
     });
 };
 
+const userWatchList = (req, res) => {
+  const { id } = req.params;
+
+  usersModel
+    .findOne({ _id: id })
+    .populate({
+      path : 'watchlist',
+      populate : {
+        path : 'createdBy'
+      }
+    })
+    .then((result) => {
+      if (result) res.status(200).json(result);
+      else res.status(404).json({ message: `there is no user with th ID ${id}` });
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
 const editAccount = async (req, res) => {
   const { name, password, avatar } = req.body;
   let hashedPassword;
@@ -212,7 +232,7 @@ const addToWatchList = (req, res) => {
       } else {
         res
           .status(404)
-          .json({ message: `There is no user with this ID: ${id}` });
+          .json({ message: `There is no auction with this ID: ${id}` });
       }
     })
     .catch((err) => {
@@ -235,7 +255,7 @@ const deleteFromWatchList = (req, res) => {
       } else {
         res
           .status(404)
-          .json({ message: `There is no user with this ID: ${id}` });
+          .json({ message: `There is no auction with this ID: ${id}` });
       }
     })
     .catch((err) => {
@@ -335,6 +355,7 @@ module.exports = {
   login,
   logout,
   getProfile,
+  userWatchList,
   editAccount,
   addToWatchList,
   deleteFromWatchList,

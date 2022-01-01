@@ -23,6 +23,12 @@ const getUserBids = (req, res) => {
 
   bidsModel
     .find({ createdBy: id })
+    .populate({
+      path : 'auction',
+      populate : {
+        path : 'createdBy'
+      }
+    })
     .then((result) => {
       if (result.length > 0) res.status(200).json(result);
       else
