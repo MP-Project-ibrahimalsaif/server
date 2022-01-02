@@ -167,6 +167,19 @@ const editAuction = async (req, res) => {
   }
 };
 
+const getAllAuctions = (req, res) => {
+  auctionsModel
+    .find({})
+    .populate("createdBy status")
+    .then((result) => {
+      if (result.length > 0) res.status(200).json(result);
+      else res.status(404).json({ message: "there is no auctions yet!!" });
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
 const changeAuctionStatus = (req, res) => {
   const { id } = req.params;
   const { status_id } = req.body;
@@ -202,5 +215,6 @@ module.exports = {
   userAuctions,
   createAuction,
   editAuction,
+  getAllAuctions,
   changeAuctionStatus,
 };

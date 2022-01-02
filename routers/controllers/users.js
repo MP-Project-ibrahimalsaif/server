@@ -184,12 +184,7 @@ const userWatchList = (req, res) => {
 };
 
 const editAccount = async (req, res) => {
-  const { name, password, avatar } = req.body;
-  let hashedPassword;
-
-  if (password) {
-    hashedPassword = await bcrypt.hash(password, SALT);
-  }
+  const { name, avatar } = req.body;
 
   const user = await usersModel.findOne({ _id: req.token.id });
 
@@ -198,7 +193,6 @@ const editAccount = async (req, res) => {
       req.token.id,
       {
         name: name ? name : user.name,
-        password: password ? hashedPassword : user.password,
         avatar: avatar ? avatar : user.avatar,
       },
       { new: true }

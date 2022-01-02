@@ -6,6 +6,7 @@ const {
   userAuctions,
   createAuction,
   editAuction,
+  getAllAuctions,
   changeAuctionStatus,
 } = require("../controllers/auctions");
 const authentication = require("../middlewares/authentication");
@@ -18,6 +19,12 @@ auctionsRouter.get("/auctions/:id", getAuction);
 auctionsRouter.get("/userAuctions/:id", authentication, userAuctions);
 auctionsRouter.post("/auctions", authentication, createAuction);
 auctionsRouter.put("/auctions/:id", authentication, editAuction);
+auctionsRouter.get(
+  "/allauctions",
+  authentication,
+  authorization,
+  getAllAuctions
+);
 auctionsRouter.put(
   "/changeAuctionStatus/:id",
   authentication,
