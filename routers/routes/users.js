@@ -8,6 +8,8 @@ const {
   signup,
   login,
   logout,
+  checkEmail,
+  resetPassword,
   getProfile,
   userWatchList,
   editAccount,
@@ -26,6 +28,8 @@ const usersRouter = express.Router();
 usersRouter.post("/signup", signup);
 usersRouter.post("/login", login);
 usersRouter.get("/logout", logout);
+usersRouter.post("/check_email", checkEmail);
+usersRouter.post("/reset_password", resetPassword);
 usersRouter.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["email", "profile"] })

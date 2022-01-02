@@ -137,6 +137,71 @@ const logout = async (req, res) => {
   }
 };
 
+const checkEmail = async (req, res) => {
+  const { email } = req.body;
+
+  const user = await usersModel.findOne({ email });
+
+  if (user) {
+    let passwordCode = "";
+    const characters = "0123456789";
+    for (let i = 0; i < 4; i++) {
+      passwordCode += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+
+    usersModel
+      .findByIdAndUpdate(user._id, { passwordCode }, { new: true })
+      .then((result) => {
+        transport
+          .sendMail({
+            from: 'iibrahim908@gmail.com',
+            to: result.email,
+            subject: "Reset Your Password",
+            html: `<h1>Reset Your Password</h1>
+              <h2>Hello ${result.username}</h2>
+              <h4>CODE: ${passwordCode}</h4>
+              <p>Please enter the code on the following link and reset your password</p>
+              <a href="https://ibrahim-social-media-project.netlify.app/reset_password/${result._id}"> Click here</a>
+              </div>`,
+          })
+          .catch((err) => console.log(err));
+        res.status(200).json(result);
+      })
+      .catch((error) => {
+        res.status(400).json(error);
+      });
+  } else {
+    res.status(400).json("No user with this email");
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { id, code, password } = req.body;
+
+  const user = await usersModel.findOne({ _id: id });
+
+  if (user.passwordCode == code) {
+    const hashedPassword = await bcrypt.hash(password, SALT);
+
+    usersModel
+      .findByIdAndUpdate(
+        id,
+        { password: hashedPassword, passwordCode: "" },
+        { new: true }
+      )
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((error) => {
+        res.status(400).json(error);
+      });
+  } else {
+    res.status(400).json("Wrong Code");
+  }
+};
+
 const getProfile = (req, res) => {
   const { id } = req.params;
 
@@ -352,6 +417,8 @@ module.exports = {
   signup,
   login,
   logout,
+  checkEmail,
+  resetPassword,
   getProfile,
   userWatchList,
   editAccount,
