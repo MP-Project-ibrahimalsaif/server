@@ -40,6 +40,12 @@ const usersSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  auth: {
+    type: String,
+  },
+  googleId: {
+    type: String,
+  },
   blocked: {
     type: Boolean,
     default: false,

@@ -188,7 +188,6 @@ const changeAuctionStatus = (req, res) => {
     .findOneAndUpdate(
       {
         _id: id,
-        sold: false,
       },
       {
         status: status_id,

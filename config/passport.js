@@ -24,7 +24,7 @@ passport.use(
       const user = await usersModel.findOne({ email }).populate("role");
 
       if (user) {
-        if (user.name == profile.given_name) {
+        if (user.auth == profile.provider && user.googleId == profile.id) {
           const payload = {
             id: user._id,
             email: user.email,
@@ -49,6 +49,8 @@ passport.use(
           avatar: profile.picture,
           role: process.env.USER_ROLE,
           active: true,
+          auth: profile.profile,
+          googleId: provider.id,
         });
 
         newUser.save().then(async (result) => {
