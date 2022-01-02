@@ -48,6 +48,7 @@ const signup = async (req, res) => {
       activeCode,
       passwordCode: "",
       role: process.env.ADMIN_ROLE,
+      auth: "local",
     });
 
     newUser
@@ -169,14 +170,15 @@ const userWatchList = (req, res) => {
   usersModel
     .findOne({ _id: id })
     .populate({
-      path : 'watchlist',
-      populate : {
-        path : 'createdBy'
-      }
+      path: "watchlist",
+      populate: {
+        path: "createdBy",
+      },
     })
     .then((result) => {
       if (result) res.status(200).json(result);
-      else res.status(404).json({ message: `there is no user with th ID ${id}` });
+      else
+        res.status(404).json({ message: `there is no user with th ID ${id}` });
     })
     .catch((err) => {
       res.status(400).json(err);
@@ -260,6 +262,7 @@ const deleteFromWatchList = (req, res) => {
 const getUsers = (req, res) => {
   usersModel
     .find({})
+    .populate("role")
     .then((result) => {
       if (result.length > 0) res.status(200).json(result);
       else res.status(404).json({ message: "there is no users yet!!" });
@@ -271,12 +274,13 @@ const getUsers = (req, res) => {
 
 const changeRole = (req, res) => {
   const { id } = req.params;
+  const { role_id } = req.body;
 
   usersModel
     .findByIdAndUpdate(
       id,
       {
-        role: process.env.ADMIN_ROLE,
+        role: role_id,
       },
       { new: true }
     )

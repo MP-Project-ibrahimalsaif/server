@@ -7,6 +7,7 @@ dotenv.config();
 const getReports = (req, res) => {
   reportsModel
     .find({})
+    .populate("reported reportedBy status")
     .then((result) => {
       if (result.length > 0) res.status(200).json(result);
       else res.status(404).json({ message: "there is no reports yet!!" });
