@@ -8,6 +8,7 @@ const {
   signup,
   login,
   logout,
+  verifyAccount,
   checkEmail,
   resetPassword,
   getProfile,
@@ -28,6 +29,7 @@ const usersRouter = express.Router();
 usersRouter.post("/signup", signup);
 usersRouter.post("/login", login);
 usersRouter.get("/logout", logout);
+usersRouter.post("/verify_account", verifyAccount);
 usersRouter.post("/check_email", checkEmail);
 usersRouter.post("/reset_password", resetPassword);
 usersRouter.get(
