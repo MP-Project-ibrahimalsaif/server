@@ -12,6 +12,10 @@ const invoicesSchema = new mongoose.Schema({
     ref: "users",
     required: true,
   },
+  paid: {
+    type: Boolean,
+    default: false,
+  },
   status: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "status",

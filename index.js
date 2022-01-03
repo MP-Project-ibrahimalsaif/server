@@ -52,6 +52,10 @@ app.use(bidsRouter);
 const reportsRouter = require("./routers/routes/reports");
 app.use(reportsRouter);
 
+// Invoices Router
+const invoicesRouter = require("./routers/routes/invoices");
+app.use(invoicesRouter);
+
 // Get PORT variable from .env
 const PORT = process.env.PORT || 5000;
 
