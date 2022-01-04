@@ -24,7 +24,7 @@ passport.use(
       const user = await usersModel.findOne({ email }).populate("role");
 
       if (user) {
-        if (user.auth == profile.provider && user.googleId == profile.id) {
+        if (user.auth == 'google' && user.googleId == profile.id) {
           const payload = {
             id: user._id,
             email: user.email,
@@ -49,7 +49,7 @@ passport.use(
           avatar: profile.picture,
           role: process.env.USER_ROLE,
           active: true,
-          auth: profile.profile,
+          auth: 'google',
           googleId: profile.id,
         });
 
