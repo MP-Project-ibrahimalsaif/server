@@ -50,7 +50,7 @@ passport.use(
           role: process.env.USER_ROLE,
           active: true,
           auth: profile.profile,
-          googleId: provider.id,
+          googleId: profile.id,
         });
 
         newUser.save().then(async (result) => {
